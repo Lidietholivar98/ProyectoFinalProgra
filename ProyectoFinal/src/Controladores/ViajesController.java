@@ -1,52 +1,57 @@
 package Controladores;
 
+import static Controladores.MenuController.menuAdministracion;
 import Interfaces.CrudInterfaces;
-import static Controladores.UtilsController.menuAdministracion;
-import Modelo.Viajes;
+import Modelo.Viaje;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ViajesController implements CrudInterfaces {
 
-    UtilsController metodos = new UtilsController();
-    private static List<Viajes> viajes = new ArrayList();
+    private UtilsController metodos = new UtilsController();
+    private static List<Viaje> viajes = new ArrayList();
+    private VehiculosController controladorVehiculos = new VehiculosController();
 
     public void CargarDatos() {
-        Viajes v1 = new Viaje("123", "Bogotá", "Medellín", "Avión");
-        Viajes v2 = new viajes("456", "Cali", "Barranquilla", "Autobús");
-        Viajes v3 = new viajes("789", "Medellín", "Bogotá", "Tren");
-        viajes.add(v1);
-        viajes.add(v2);
-        viajes.add(v3);
+        //Viaje(String idViaje, String numeroPlaca, String idChofer, String fechaViaje, String destino, int capacidadPasajeros, String precioTiquete)
+//        Viajes v1 = new Viajes("123", "Bogotá", "Medellín", "Avión");
+//        Viajes v2 = new viajes("456", "Cali", "Barranquilla", "Autobús");
+//        Viajes v3 = new viajes("789", "Medellín", "Bogotá", "Tren");
+//        viajes.add(v1);
+//        viajes.add(v2);
+//        viajes.add(v3);
     }
 
     @Override
-    public void Crear() {
-        String id = "";
-        String origen = "";
+    public void Registrar() {
+        String numeroPlaca = "";
+        String idChofer = "";
+        LocalDate fechaViaje = LocalDate.now();
         String destino = "";
-        String medioTransporte = "";
+        String precioTiqueteStr = "";
+        double precioTiquete = 0.0;
 
-        Boolean idValido = false;
-        while (!idValido) {
-            id = JOptionPane.showInputDialog("Ingrese el ID del viaje: ");
-            if (id.isEmpty()) {
-                metodos.mensajeAlerta("Debe ingresar un ID válido");
-            } else if (existeId(id)) {
-                metodos.mensajeAlerta("Este ID ya se encuentra registrado");
+        Boolean placaValida = false;
+        while (!placaValida) {
+            numeroPlaca = JOptionPane.showInputDialog("Ingrese el número de placa: ");
+            if (numeroPlaca.isEmpty()) {
+                metodos.mensajeAlerta("Debe ingresar un número de placa válido");
+            } else if (existePlaca(numeroPlaca)) {
+                metodos.mensajeAlerta("Esta placa ya posee un viaje programado");
             } else {
-                idValido = true;
+                placaValida = true;
             }
         }
 
-        Boolean origenValido = false;
-        while (!origenValido) {
-            origen = JOptionPane.showInputDialog("Ingrese el lugar de origen: ");
-            if (origen.isEmpty()) {
-                metodos.mensajeAlerta("Debe ingresar un lugar de origen válido");
+        Boolean choferValido = false;
+        while (!choferValido) {
+            idChofer = JOptionPane.showInputDialog("Ingrese el identificador de chofer: ");
+            if (idChofer.isEmpty()) {
+                metodos.mensajeAlerta("Debe ingresar un identificador de chofer válido");
             } else {
-                origenValido = true;
+                choferValido = true;
             }
         }
 
@@ -59,83 +64,123 @@ public class ViajesController implements CrudInterfaces {
                 destinoValido = true;
             }
         }
+        
+        int capacidadPasajeros = controladorVehiculos.obtenerCapacidadPasajerosPorPlaca(numeroPlaca);
 
-        Boolean medioTransporteValido = false;
-        while (!medioTransporteValido) {
-            medioTransporte = JOptionPane.showInputDialog("Ingrese el medio de transporte: ");
-            if (medioTransporte.isEmpty()) {
-                metodos.mensajeAlerta("Debe ingresar un medio de transporte válido");
-            } else {
-                medioTransporteValido = true;
+        Boolean precioTiqueteValido = false;
+        while (!precioTiqueteValido) {
+            precioTiqueteStr = JOptionPane.showInputDialog("Ingrese el precio del tiquete: ");
+            if(!esDouble(precioTiqueteStr)){
+                metodos.mensajeAlerta("Debe ingresar un precio válido");
+            }
+            else{
+                precioTiquete = Double.parseDouble(precioTiqueteStr);
+                if(precioTiquete <= 0){
+                    metodos.mensajeAlerta("Debe ingresar un precio superior a cero");
+                }
+                else{
+                    precioTiqueteValido = true;
+                }
             }
         }
-
-        Viajes nuevoViaje = new Viajes(id, origen, destino, medioTransporte);
+        
+        Viaje nuevoViaje = new Viaje(numeroPlaca, idChofer, fechaViaje, destino, capacidadPasajeros, precioTiquete);
         viajes.add(nuevoViaje);
 
         metodos.mensajeInformacion("Viaje creado exitosamente", "Creación de viaje");
     }
 
-    @Override
-    public void Ver() {
-        String mensaje = "Lista de Viajes: \n\n";
-        for (Viaje v : viajes) {
-            mensaje += "ID: " + v.getId() + "\nOrigen: " + v.getOrigen() + "\nDestino: " + v.getDestino() + "\nMedio de transporte: " + v.getMedioTransporte() + "\n\n";
-        }
-        metodos.mensajeInformacion(mensaje, "Lista de viajes");
+    public void Ver() {//TODO: Trabajar este metodo, ya que no se el proposito del mismo
+//        String mensaje = "Lista de Viajes: \n\n";
+//        for (Viaje v : viajes) {
+//            mensaje += "ID: " + v.getId() + "\nOrigen: " + v.getOrigen() + "\nDestino: " + v.getDestino() + "\nMedio de transporte: " + v.getMedioTransporte() + "\n\n";
+//        }
+//        metodos.mensajeInformacion(mensaje, "Lista de viajes");
     }
 
     @Override
-    public void Modificar() {
-        String idViaje = JOptionPane.showInputDialog("Ingrese el ID del viaje a modificar: ");
-        int index = buscarIndicePorId(idViaje);
-        if (index == -1) {
-            metodos.mensajeAlerta("El ID ingresado no existe");
-            return;
+    public void Editar() {//TODO: arreglar este metodo para que se hagan los respectivos SET
+        Boolean idViajeValido = false;
+        String idViajeStr = "";
+        int idViaje = -1;
+        while(!idViajeValido){
+            idViajeStr = JOptionPane.showInputDialog("Ingrese el identificador del viaje: ");
+            if(!esEntero(idViajeStr)){
+                metodos.mensajeAlerta("Debe ingresar un número entero");
+            }
+            else{
+                idViaje = Integer.parseInt(idViajeStr);
+                if (idViaje <= 0) {
+                    metodos.mensajeAlerta("Debe ingresar un identificador de viaje válido");
+                } else {
+                    idViajeValido = true;
+                }                
+            }
         }
+        
+        int index = buscarIndicePorId(idViaje);
+        if (index != -1) {
+            Viaje viaje = viajes.get(index);
+            String nuevoOrigen = JOptionPane.showInputDialog("Ingrese el nuevo lugar de origen: ");
+            String nuevoDestino = JOptionPane.showInputDialog("Ingrese el nuevo lugar de destino: ");
+            String nuevoMedioTransporte = JOptionPane.showInputDialog("Ingrese el nuevo medio de transporte: ");
 
-        Viaje viaje = viajes.get(index);
-        String nuevoOrigen = JOptionPane.showInputDialog("Ingrese el nuevo lugar de origen: ");
-        String nuevoDestino = JOptionPane.showInputDialog("Ingrese el nuevo lugar de destino: ");
-        String nuevoMedioTransporte = JOptionPane.showInputDialog("Ingrese el nuevo medio de transporte: ");
+            viaje.setDestino(nuevoDestino);
 
-        viaje.setOrigen(nuevoOrigen);
-        viaje.setDestino(nuevoDestino);
-        viaje.setMedioTransporte(nuevoMedioTransporte);
-
-        metodos.mensajeInformacion("Viaje modificado exitosamente", "Modificación de viaje");
+            metodos.mensajeInformacion("Viaje modificado exitosamente", "Modificación de viaje");
+        }
+        else{
+            metodos.mensajeAlerta("El identificador ingresado no se encuentra registrado");
+        }
     }
 
     @Override
     public void Eliminar() {
-        String idViaje = JOptionPane.showInputDialog("Ingrese el ID del viaje a eliminar: ");
-        int index = buscarIndicePorId(idViaje);
-        if (index == -1) {
-            metodos.mensajeAlerta("El ID ingresado no existe");
-            return;
+        Boolean idViajeValido = false;
+        String idViajeStr = "";
+        int idViaje = -1;
+        while(!idViajeValido){
+            idViajeStr = JOptionPane.showInputDialog("Ingrese el identificador del viaje: ");
+            if(!esEntero(idViajeStr)){
+                metodos.mensajeAlerta("Debe ingresar un número entero");
+            }
+            else{
+                idViaje = Integer.parseInt(idViajeStr);
+                if (idViaje <= 0) {
+                    metodos.mensajeAlerta("Debe ingresar un identificador de viaje válido");
+                } else {
+                    idViajeValido = true;
+                }                
+            }
         }
-
-        int respuesta = metodos.mensajeConfirmacionSIoNo("¿Está seguro que desea eliminar el viaje?", "Eliminar viaje");
-        if (respuesta == JOptionPane.YES_OPTION) {
-            viajes.remove(index);
-            metodos.mensajeInformacion("Viaje eliminado exitosamente", "Eliminación de viaje");
+        
+        int index = buscarIndicePorId(idViaje);
+        if (index != -1) {
+            int respuesta = metodos.mensajeConfirmacionSIoNo("¿Está seguro que desea eliminar el viaje?", "Eliminar viaje");
+            if (respuesta == JOptionPane.YES_OPTION) {
+                viajes.remove(index);
+                metodos.mensajeInformacion("Viaje eliminado exitosamente", "Eliminación de viaje");
+            }
+        }
+        else{
+            metodos.mensajeAlerta("El identificador ingresado no se encuentra registrado");
         }
     }
 
-    public void menuViaje() {
+    public void menuViajes() {
         String[] opciones = {"Crear", "Ver", "Modificar", "Eliminar", "Volver"};
         int opcion = -1;
         while (opcion != opciones.length - 1) {
             opcion = metodos.menuBotones("Seleccione una opción", "Viajes", opciones, "Volver");
             switch (opcion) {
                 case 0:
-                    Crear();
+                    Registrar();
                     break;
                 case 1:
                     Ver();
                     break;
                 case 2:
-                    Modificar();
+                    Editar();
                     break;
                 case 3:
                     Eliminar();
@@ -158,18 +203,20 @@ public class ViajesController implements CrudInterfaces {
     }
 
 // Métodos auxiliares
-    public int buscarIndicePorId(String id) {
+    public int buscarIndicePorId(int id) {
+        int indice = -1;
         for (int i = 0; i < viajes.size(); i++) {
-            if (viajes.get(i).getId().equals(id)) {
-                return i;
+            if (viajes.get(i).getIdViaje() == id) {
+                indice = i;
+                break;
             }
         }
-        return -1;
+        return indice;
     }
 
-    public boolean existeId(String id) {
+    public boolean existePlaca(String numeroPlaca) {
         for (Viaje v : viajes) {
-            if (v.getId().equals(id)) {
+            if (v.getNumeroPlaca().equals(numeroPlaca)) {
                 return true;
             }
         }
@@ -190,6 +237,24 @@ public class ViajesController implements CrudInterfaces {
     public void Buscar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-
+    
+    public boolean esDouble(String texto) {
+        double valor;
+        try {
+            valor = Double.parseDouble(texto);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+    
+    public boolean esEntero(String texto) {
+        int valor;
+        try {
+            valor = Integer.parseInt(texto);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
 }

@@ -1,14 +1,12 @@
 package Controladores;
 
-import Controladores.UtilsController;
-import static Controladores.UtilsController.menuAdministracion;
+import static Controladores.MenuController.menuAdministracion;
 import Interfaces.CrudInterfaces;
 import Modelo.Usuario;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 
-public class UsuarioController implements CrudInterfaces {
+public class UsuariosController implements CrudInterfaces {
 
     UtilsController metodos = new UtilsController();
     private static ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -23,7 +21,7 @@ public class UsuarioController implements CrudInterfaces {
     }
 
     @Override
-    public void Crear() {
+    public void Registrar() {
         String numeroId = "";
         String codigoUsuario = "";
         String claveAcceso = "";
@@ -105,7 +103,7 @@ public class UsuarioController implements CrudInterfaces {
     }
 
     @Override
-    public void Modificar() {
+    public void Editar() {
         String identificacion = "";
         int indexUsuario = -1;
         try {
@@ -167,13 +165,13 @@ public class UsuarioController implements CrudInterfaces {
             opcion = metodos.menuBotones("Seleccione una opción", "Usuarios", opciones, "Volver");
             switch (opcion) {
                 case 0:
-                    Crear();
+                    Registrar();
                     break;
                 case 1:
                     Ver();
                     break;
                 case 2:
-                    Modificar();
+                    Editar();
                     break;
                 case 3:
                     Eliminar();

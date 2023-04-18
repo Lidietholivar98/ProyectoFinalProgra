@@ -1,27 +1,23 @@
-
 package Controladores;
 
-import Controladores.UtilsController;
-import  static Controladores.UtilsController.menuVentas;
+import static Controladores.MenuController.menuVentas;
 import Interfaces.CrudInterfaces;
 
+public class TiquetesController implements CrudInterfaces {
 
-public class TicketesController implements CrudInterfaces{
-        
     UtilsController metodos = new UtilsController();
-    
 
-    public void menuTicketes() {
-        String[] opciones = {"Validar espacio", "Crear", "Anular", "Consultar","Informe", "Volver"};
+    public void menuTiquetes() {
+        String[] opciones = {"Validar espacio", "Crear", "Anular", "Consultar", "Informe", "Volver"};
         int opcion = -1;
         while (opcion != opciones.length - 1) {
-            opcion = metodos.menuBotones("Seleccione una opción", "Ticketes", opciones, "Volver");
+            opcion = metodos.menuBotones("Seleccione una opción", "Tiquetes", opciones, "Volver");
             switch (opcion) {
                 case 0:
                     Validar();
                     break;
                 case 1:
-                    Crear();
+                    Registrar();
                     break;
                 case 2:
                     Anular();
@@ -31,7 +27,7 @@ public class TicketesController implements CrudInterfaces{
                     break;
                 case 4:
                     Informe();
-                 break;
+                    break;
                 case 5:
                     menuVentas();
                     break;
@@ -39,20 +35,18 @@ public class TicketesController implements CrudInterfaces{
         }
     }
 
-
-
     @Override
     public void Informe() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void Crear() {
+    public void Registrar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void Modificar() {
+    public void Editar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -80,5 +74,4 @@ public class TicketesController implements CrudInterfaces{
     public void Anular() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
 }

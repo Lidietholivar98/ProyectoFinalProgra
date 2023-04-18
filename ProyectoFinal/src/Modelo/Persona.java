@@ -15,7 +15,6 @@ public class Persona {
         this.nombre = nombre;
         this.numeroTelefono = numeroTelefono;
         this.email = email;
-
     }
 
     public String getNumeroIdentificacion() {

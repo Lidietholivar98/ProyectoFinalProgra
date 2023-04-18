@@ -1,19 +1,18 @@
 package Controladores;
 
-import Controladores.UtilsController;
-import static Controladores.UtilsController.menuAdministracion;
+import static Controladores.MenuController.menuAdministracion;
 import Interfaces.CrudInterfaces;
 import Modelo.Vehiculo;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-public class VehiculoController implements CrudInterfaces {
+public class VehiculosController implements CrudInterfaces {
 
     UtilsController metodos = new UtilsController();
     private static ArrayList<Vehiculo> vehiculos = new ArrayList<>();
 
     @Override
-    public void Crear() {
+    public void Registrar() {
         String numeroPlaca = "";
         String marca = "";
         String estilo = "";
@@ -42,7 +41,7 @@ public class VehiculoController implements CrudInterfaces {
     }
 
     @Override
-    public void Modificar() {
+    public void Editar() {
         String placa = JOptionPane.showInputDialog("Ingrese el número de placa: ");
         Vehiculo vehiculo = buscarPorPlaca(placa);
 
@@ -69,20 +68,20 @@ public class VehiculoController implements CrudInterfaces {
         }
     }
 
-    public void menuVehiculo() {
+    public void menuVehiculos() {
         String[] opciones = {"Registrar", "Consultar", "Modificar", "Eliminar", "Volver"};
         int opcion = -1;
         while (opcion != opciones.length - 1) {
             opcion = metodos.menuBotones("Seleccione una opción", "Vehiculo", opciones, "Volver");
             switch (opcion) {
                 case 0:
-                    Crear();
+                    Registrar();
                     break;
                 case 1:
                     Ver();
                     break;
                 case 2:
-                    Modificar();
+                    Editar();
                     break;
                 case 3:
                     Eliminar();
@@ -111,6 +110,17 @@ public class VehiculoController implements CrudInterfaces {
             }
         }
         return null;
+    }
+    
+    public int obtenerCapacidadPasajerosPorPlaca(String placa){
+        int capacidad = -1;
+        for (Vehiculo vehiculo : vehiculos) {
+            if (vehiculo.getNumeroPlaca().equalsIgnoreCase(placa)) {
+                capacidad = vehiculo.getCapacidadPasajeros();
+                break;
+            }
+        }
+        return capacidad;
     }
 
     @Override

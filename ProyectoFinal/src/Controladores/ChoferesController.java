@@ -1,7 +1,6 @@
 package Controladores;
 
-import Controladores.UtilsController;
-import static Controladores.UtilsController.menuAdministracion;
+import static Controladores.MenuController.menuAdministracion;
 import Interfaces.CrudInterfaces;
 import Modelo.Chofer;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class ChoferesController implements CrudInterfaces{
     }
    
     @Override
-    public void Crear() {
+    public void Registrar() {
         String numeroId = "";
         String fechaLicencia = "";
 
@@ -92,7 +91,7 @@ public class ChoferesController implements CrudInterfaces{
     }
 
     @Override
-    public void Modificar() {
+    public void Editar() {
         String identificacion = "";
         int indexChofer = -1;
         try {
@@ -154,13 +153,13 @@ public class ChoferesController implements CrudInterfaces{
             opcion = metodos.menuBotones("Seleccione una opción", "Choferes", opciones, "Volver");
             switch (opcion) {
                 case 0:
-                    Crear();
+                    Registrar();
                     break;
                 case 1:
                     Ver();
                     break;
                 case 2:
-                    Modificar();
+                    Editar();
                     break;
                 case 3:
                     Eliminar();

@@ -1,20 +1,24 @@
 package Modelo;
 
-public class Viajes {
+import java.time.LocalDate;
 
-    private String idViaje;
+public class Viaje {
+
+    private int idViaje;
     private String numeroPlaca;
     private String idChofer;
-    private String fechaViaje;
+    private LocalDate fechaViaje;
     private String destino;
-    private String capacidadPasajeros;
-    private String precioTiquete;
+    private int capacidadPasajeros;//TODO validar contra capacidad del bus
+    private double precioTiquete;
+    private static int nuevoNumeroViaje;
 
-    public Viajes() {
+    public Viaje() {
     }
 
-    public Viajes(String idViaje, String numeroPlaca, String idChofer, String fechaViaje, String destino, String capacidadPasajeros, String precioTiquete) {
-        this.idViaje = idViaje;
+    public Viaje(String numeroPlaca, String idChofer, LocalDate fechaViaje, String destino, int capacidadPasajeros, double precioTiquete) {
+        setNuevoNumeroViaje();
+        this.idViaje = nuevoNumeroViaje;
         this.numeroPlaca = numeroPlaca;
         this.idChofer = idChofer;
         this.fechaViaje = fechaViaje;
@@ -22,12 +26,16 @@ public class Viajes {
         this.capacidadPasajeros = capacidadPasajeros;
         this.precioTiquete = precioTiquete;
     }
+    
+    public static void setNuevoNumeroViaje() {
+        nuevoNumeroViaje++;
+    }
 
-    public String getIdViaje() {
+    public int getIdViaje() {
         return idViaje;
     }
 
-    public void setIdViaje(String idViaje) {
+    public void setIdViaje(int idViaje) {
         this.idViaje = idViaje;
     }
 
@@ -47,11 +55,11 @@ public class Viajes {
         this.idChofer = idChofer;
     }
 
-    public String getFechaViaje() {
+    public LocalDate getFechaViaje() {
         return fechaViaje;
     }
 
-    public void setFechaViaje(String fechaViaje) {
+    public void setFechaViaje(LocalDate fechaViaje) {
         this.fechaViaje = fechaViaje;
     }
 
@@ -63,19 +71,19 @@ public class Viajes {
         this.destino = destino;
     }
 
-    public String getCapacidadPasajeros() {
+    public int getCapacidadPasajeros() {
         return capacidadPasajeros;
     }
 
-    public void setCapacidadPasajeros(String capacidadPasajeros) {
+    public void setCapacidadPasajeros(int capacidadPasajeros) {
         this.capacidadPasajeros = capacidadPasajeros;
     }
 
-    public String getPrecioTiquete() {
+    public double getPrecioTiquete() {
         return precioTiquete;
     }
 
-    public void setPrecioTiquete(String precioTiquete) {
+    public void setPrecioTiquete(double precioTiquete) {
         this.precioTiquete = precioTiquete;
     }
 
@@ -86,7 +94,12 @@ public class Viajes {
         sb.append("\nID del Viaje: ").append(idViaje);
         sb.append("\nNúmero de Placa: ").append(numeroPlaca);
         sb.append("\nID del Chofer: ").append(idChofer);
-        sb.append("\nFecha del Viaje: ").append(fechaViaje);
+        sb.append("\nFecha del Viaje: ")
+                .append(fechaViaje.getDayOfMonth())
+                .append('/')
+                .append(fechaViaje.getMonth())
+                .append('/')
+                .append(fechaViaje.getYear());
         sb.append("\nDestino: ").append(destino);
         sb.append("\nCapacidad de pasajeros: ").append(capacidadPasajeros);
         sb.append("\nPrecio del tiquete: ").append(precioTiquete);

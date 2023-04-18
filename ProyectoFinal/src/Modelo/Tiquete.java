@@ -1,31 +1,29 @@
 package Modelo;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-public class Tickets {
+public class Tiquete {
 
     private static final double IVA = 0.13; // Porcentaje del IVA
-    
     private String idViaje;
     private int cantidad;
-    private double precioVenta;
+    private double precioVenta;//TODO se valida contra el viaje
     private Date fechaVenta;
-    private double ventaBruta;
+    private double totalVentaBruta;
     private double totalIVA;
     private double totalVenta;
 
-    public Tickets() {
+    public Tiquete() {
     }
 
-    public Tickets(String idViaje, int cantidad, double precioVenta, Date fechaVenta) {
+    public Tiquete(String idViaje, int cantidad, double precioVenta, Date fechaVenta) {
         this.idViaje = idViaje;
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
         this.fechaVenta = fechaVenta;
-        this.ventaBruta = cantidad * precioVenta;
-        this.totalIVA = ventaBruta * IVA;
-        this.totalVenta = ventaBruta + totalIVA;
+        this.totalVentaBruta = cantidad * precioVenta;
+        this.totalIVA = totalVentaBruta * IVA;
+        this.totalVenta = totalVentaBruta + totalIVA;
     }
 
     public String getIdViaje() {
@@ -60,4 +58,3 @@ public class Tickets {
         this.fechaVenta = fechaVenta;
     }
 }
-

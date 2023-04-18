@@ -1,8 +1,8 @@
 package Controladores;
 
 //Implementar los métodos abstractos de la interface.
+import static Controladores.MenuController.menuAdministracion;
 import Interfaces.CrudInterfaces;
-import static Controladores.UtilsController.menuAdministracion;
 import Modelo.Persona;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class PersonasController implements CrudInterfaces {
     }
     
     @Override
-    public void Crear() {
+    public void Registrar() {
         String numeroId = "";
         String nombre = "";
         String numeroTelefono= "";
@@ -122,7 +122,7 @@ public class PersonasController implements CrudInterfaces {
     }
 
     @Override
-    public void Modificar() {
+    public void Editar() {
         String identificacion = "";
         int indexPersona = -1;
         try {
@@ -174,8 +174,6 @@ public class PersonasController implements CrudInterfaces {
             metodos.mensajeAlerta("Hubo un error al eliminar la persona");
         }
     }
-
-
     
     public void menuPersonas() {
         String[] opciones = {"Registrar", "Consultar", "Modificar", "Eliminar", "Volver"};
@@ -184,13 +182,13 @@ public class PersonasController implements CrudInterfaces {
             opcion = metodos.menuBotones("Seleccione una opción", "Personas", opciones, "Volver");
             switch (opcion) {
                 case 0:
-                    Crear();
+                    Registrar();
                     break;
                 case 1:
                     Ver();
                     break;
                 case 2:
-                    Modificar();
+                    Editar();
                     break;
                 case 3:
                     Eliminar();
