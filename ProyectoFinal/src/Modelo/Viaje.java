@@ -12,6 +12,7 @@ public class Viaje {
     private int capacidadPasajeros;//TODO validar contra capacidad del bus
     private double precioTiquete;
     private static int nuevoNumeroViaje;
+    private int espaciosVendidos;
 
     public Viaje() {
     }
@@ -25,6 +26,7 @@ public class Viaje {
         this.destino = destino;
         this.capacidadPasajeros = capacidadPasajeros;
         this.precioTiquete = precioTiquete;
+        this.espaciosVendidos = 0;
     }
     
     public static void setNuevoNumeroViaje() {
@@ -77,6 +79,22 @@ public class Viaje {
 
     public void setCapacidadPasajeros(int capacidadPasajeros) {
         this.capacidadPasajeros = capacidadPasajeros;
+    }
+    
+    public int getEspaciosVendidos() {
+        return espaciosVendidos;
+    }
+
+    public void setEspaciosVendidos(int espaciosVendidos) {
+        this.espaciosVendidos = espaciosVendidos;
+    }
+    
+    public void anularEspacioVendido(int cantidadAnulada){
+        this.espaciosVendidos = this.espaciosVendidos - cantidadAnulada;
+    }
+    
+    public int cantidadDeEspacioDisponible(){
+        return this.capacidadPasajeros - this.espaciosVendidos;
     }
 
     public double getPrecioTiquete() {

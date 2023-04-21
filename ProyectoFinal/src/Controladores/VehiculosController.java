@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 public class VehiculosController implements CrudInterfaces {
 
-    UtilsController metodos = new UtilsController();
+    private UtilsController metodos = new UtilsController();
     private static ArrayList<Vehiculo> vehiculos = new ArrayList<>();
 
     @Override
@@ -121,11 +121,6 @@ public class VehiculosController implements CrudInterfaces {
             }
         }
         return capacidad;
-    }
-
-    @Override
-    public void Validar() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

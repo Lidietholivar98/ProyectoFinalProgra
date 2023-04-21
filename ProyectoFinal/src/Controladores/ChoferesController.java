@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 public class ChoferesController implements CrudInterfaces{
         
-    UtilsController metodos = new UtilsController();
+    private UtilsController metodos = new UtilsController();
     private static List<Chofer> choferes = new ArrayList();
 
     public void CargarDatos() {
@@ -142,9 +142,6 @@ public class ChoferesController implements CrudInterfaces{
             metodos.mensajeAlerta("Hubo un error en la eliminación del chofer");
         }
     }
-
-    
-    
     
     public void menuChoferes() {
         String[] opciones = {"Registrar", "Consultar", "Modificar", "Eliminar", "Volver"};
@@ -214,11 +211,6 @@ public class ChoferesController implements CrudInterfaces{
         }
 
         return existe;
-    }
-
-    @Override
-    public void Validar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
