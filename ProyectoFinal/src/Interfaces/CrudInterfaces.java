@@ -3,17 +3,17 @@ package Interfaces;
 
 
 public interface CrudInterfaces {
-    public void Crear();
+    public void Registrar();
     
-    public void Modificar();
+    public void Consultar();
     
-    public void Validar();
+    public void Editar();
     
     public void Eliminar();
     
-    public void Informe();
+    public void Validar();
     
-    public void Consultar();
+    public void Informe();
     
     public void Anular();
     
