@@ -35,4 +35,24 @@ public class UtilsController {
         Matcher coincidencia = patron.matcher(correoAValidar);
         return coincidencia.matches();
     }
+    
+    public Boolean esEntero(String texto) {
+        int valor;
+        try {
+            valor = Integer.parseInt(texto);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+    
+    public boolean esDouble(String texto) {
+        double valor;
+        try {
+            valor = Double.parseDouble(texto);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
 }

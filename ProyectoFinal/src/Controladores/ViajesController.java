@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class ViajesController implements CrudInterfaces {
 
     private UtilsController metodos = new UtilsController();
-    private static List<Viaje> viajes = new ArrayList();
+    private List<Viaje> viajes = new ArrayList();
     private VehiculosController controladorVehiculos = new VehiculosController();
 
     public void CargarDatos() {
@@ -70,7 +70,7 @@ public class ViajesController implements CrudInterfaces {
         Boolean precioTiqueteValido = false;
         while (!precioTiqueteValido) {
             precioTiqueteStr = JOptionPane.showInputDialog("Ingrese el precio del tiquete: ");
-            if(!esDouble(precioTiqueteStr)){
+            if(!metodos.esDouble(precioTiqueteStr)){
                 metodos.mensajeAlerta("Debe ingresar un precio válido");
             }
             else{
@@ -105,7 +105,7 @@ public class ViajesController implements CrudInterfaces {
         int idViaje = -1;
         while(!idViajeValido){
             idViajeStr = JOptionPane.showInputDialog("Ingrese el identificador del viaje: ");
-            if(!esEntero(idViajeStr)){
+            if(!metodos.esEntero(idViajeStr)){
                 metodos.mensajeAlerta("Debe ingresar un número entero");
             }
             else{
@@ -141,7 +141,7 @@ public class ViajesController implements CrudInterfaces {
         int idViaje = -1;
         while(!idViajeValido){
             idViajeStr = JOptionPane.showInputDialog("Ingrese el identificador del viaje: ");
-            if(!esEntero(idViajeStr)){
+            if(!metodos.esEntero(idViajeStr)){
                 metodos.mensajeAlerta("Debe ingresar un número entero");
             }
             else{
@@ -203,7 +203,7 @@ public class ViajesController implements CrudInterfaces {
     }
 
 // Métodos auxiliares
-    public int buscarIndicePorId(int id) {
+    private int buscarIndicePorId(int id) {
         int indice = -1;
         for (int i = 0; i < viajes.size(); i++) {
             if (viajes.get(i).getIdViaje() == id) {
@@ -214,7 +214,7 @@ public class ViajesController implements CrudInterfaces {
         return indice;
     }
 
-    public boolean existePlaca(String numeroPlaca) {
+    private boolean existePlaca(String numeroPlaca) {
         for (Viaje v : viajes) {
             if (v.getNumeroPlaca().equals(numeroPlaca)) {
                 return true;
@@ -222,10 +222,36 @@ public class ViajesController implements CrudInterfaces {
         }
         return false;
     }
-
-    @Override
-    public void Validar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    private Viaje buscarPorNumeroViaje(int idViaje) {
+        Viaje resultado = new Viaje();
+        for (Viaje viaje : viajes) {
+            if (viaje.getIdViaje() == idViaje) {
+                resultado = viaje;
+                break;
+            }
+        }
+        return resultado;
+    }
+    
+    public int obtenerEspaciosDisponibles(int idViaje){
+        Viaje viaje = buscarPorNumeroViaje(idViaje);
+        return viaje.cantidadDeEspacioDisponible();
+    }
+    
+    public double obtenerPrecioVentaDelTiquete(int idViaje){
+        Viaje viaje = buscarPorNumeroViaje(idViaje);
+        return viaje.getPrecioTiquete();
+    }
+    
+    public void venderEspacioDisponible(int idViaje, int cantidadAVender){
+        Viaje viaje = buscarPorNumeroViaje(idViaje);
+        viaje.setEspaciosVendidos(cantidadAVender);
+    }
+    
+    public void anularEspacioVendido(int idViaje, int cantidadAnulada){
+        Viaje viaje = buscarPorNumeroViaje(idViaje);
+        viaje.anularEspacioVendido(cantidadAnulada);
     }
 
     @Override
@@ -236,25 +262,5 @@ public class ViajesController implements CrudInterfaces {
     @Override
     public void Buscar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    public boolean esDouble(String texto) {
-        double valor;
-        try {
-            valor = Double.parseDouble(texto);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-    
-    public boolean esEntero(String texto) {
-        int valor;
-        try {
-            valor = Integer.parseInt(texto);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
     }
 }

@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public class PersonasController implements CrudInterfaces {
 
     //Implementa la clase MetodosController (Copia)
-    UtilsController metodos = new UtilsController();
+    private UtilsController metodos = new UtilsController();
     private static List<Persona> personas = new ArrayList();
 
     public void CargarDatos() {
@@ -255,11 +255,6 @@ public class PersonasController implements CrudInterfaces {
         }
 
         return existe;
-    }
-
-    @Override
-    public void Validar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

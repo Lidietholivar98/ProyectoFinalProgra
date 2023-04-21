@@ -11,8 +11,6 @@ public interface CrudInterfaces {
     
     public void Eliminar();
     
-    public void Validar();
-    
     public void Informe();
     
     public void Anular();

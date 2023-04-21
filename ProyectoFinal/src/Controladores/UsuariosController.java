@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 public class UsuariosController implements CrudInterfaces {
 
-    UtilsController metodos = new UtilsController();
+    private UtilsController metodos = new UtilsController();
     private static ArrayList<Usuario> usuarios = new ArrayList<>();
 
     public void CargarDatos() {
@@ -226,11 +226,6 @@ public class UsuariosController implements CrudInterfaces {
         }
 
         return existe;
-    }
-
-    @Override
-    public void Validar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
