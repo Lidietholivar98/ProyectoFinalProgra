@@ -30,14 +30,7 @@ public class VehiculosController implements CrudInterfaces {
     }
 
     public void Ver() {
-        String placa = JOptionPane.showInputDialog("Ingrese el número de placa: ");
-        Vehiculo vehiculo = buscarPorPlaca(placa);
-
-        if (vehiculo != null) {
-            JOptionPane.showMessageDialog(null, vehiculo.toString());
-        } else {
-            JOptionPane.showMessageDialog(null, "Vehículo no encontrado");
-        }
+       
     }
 
     @Override
@@ -78,7 +71,7 @@ public class VehiculosController implements CrudInterfaces {
                     Registrar();
                     break;
                 case 1:
-                    Ver();
+                    Consultar();
                     break;
                 case 2:
                     Editar();
@@ -125,7 +118,14 @@ public class VehiculosController implements CrudInterfaces {
 
     @Override
     public void Consultar() {
-        throw new UnsupportedOperationException("Not supported yet.");
+         String placa = JOptionPane.showInputDialog("Ingrese el número de placa: ");
+        Vehiculo vehiculo = buscarPorPlaca(placa);
+
+        if (vehiculo != null) {
+            JOptionPane.showMessageDialog(null, vehiculo.toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "Vehículo no encontrado");
+        }
     }
 
     @Override
