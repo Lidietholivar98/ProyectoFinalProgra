@@ -3,6 +3,7 @@ package Controladores;
 import static Controladores.MenuController.menuVentas;
 import Interfaces.CrudInterfaces;
 import Modelo.Tiquete;
+import Modelo.Vehiculo;
 import Modelo.Viaje;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class TiquetesController implements CrudInterfaces {
 
     private UtilsController metodos = new UtilsController();
     private ViajesController viajes = new ViajesController();
+    private VehiculosController vehiculos = new VehiculosController();
     private static List<Tiquete> ventas = new ArrayList();
 
     public void menuTiquetes() {
@@ -104,7 +106,20 @@ public class TiquetesController implements CrudInterfaces {
 
     @Override
     public void Informe() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String informe = "";
+        Viaje viaje = new Viaje();
+        Vehiculo vehiculo = new Vehiculo();
+        
+        for (Tiquete tiquete : ventas) {
+            viaje = viajes.buscarPorNumeroDeViaje(tiquete.getIdViaje());
+            vehiculo = vehiculos.buscarPorPlaca(viaje.getNumeroPlaca());
+            informe = informe 
+                    + "Viaje #: " + tiquete.getIdViaje()
+                    + "\nCapacidad del autobus: " + vehiculo.getCapacidadPasajeros()
+                    + "\nTiquetes vendidos: "+tiquete.getCantidad()
+                    + "\nDisponibilidad de espacios: "+viajes.obtenerEspaciosDisponibles(viaje.getIdViaje()) + "\n";
+        }
+        metodos.mensajeInformacion(informe);
     }
 
     @Override

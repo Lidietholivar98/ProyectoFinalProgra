@@ -1,15 +1,24 @@
 package Main;
 
+import Controladores.ChoferesController;
 import Controladores.MenuController;
 import Controladores.UtilsController;
+import Controladores.VehiculosController;
+import Controladores.ViajesController;
 import javax.swing.JOptionPane;
 
 public class Inicio {
 
     private static UtilsController metodos = new UtilsController();
     private static MenuController menu = new MenuController();
+    private static ViajesController viajes = new ViajesController();
+    private static VehiculosController vehiculos = new VehiculosController();
+    private static ChoferesController choferes = new ChoferesController();
 
     public static void main(String[] args) {
+        choferes.CargarDatos();
+        vehiculos.CargarDatos();
+        viajes.CargarDatos();
         menuPrincipal();
     }
 

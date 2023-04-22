@@ -15,13 +15,13 @@ public class ViajesController implements CrudInterfaces {
     private VehiculosController controladorVehiculos = new VehiculosController();
 
     public void CargarDatos() {
-        //Viaje(String idViaje, String numeroPlaca, String idChofer, String fechaViaje, String destino, int capacidadPasajeros, String precioTiquete)
-//        Viajes v1 = new Viajes("123", "Bogotá", "Medellín", "Avión");
-//        Viajes v2 = new viajes("456", "Cali", "Barranquilla", "Autobús");
-//        Viajes v3 = new viajes("789", "Medellín", "Bogotá", "Tren");
-//        viajes.add(v1);
-//        viajes.add(v2);
-//        viajes.add(v3);
+        //Viaje(String numeroPlaca, String idChofer, LocalDate fechaViaje, String destino, int capacidadPasajeros, double precioTiquete)
+        Viaje v1 = new Viaje("ABC123", "111111111", LocalDate.now(), "Limon", 4, 2000.0);
+        Viaje v2 = new Viaje("ABC456", "222222222", LocalDate.now(), "Barranquilla", 20, 1800);
+        Viaje v3 = new Viaje("ABC789", "333333333", LocalDate.now(), "Bogotá", 65, 6410);
+        viajes.add(v1);
+        viajes.add(v2);
+        viajes.add(v3);
     }
 
     @Override
@@ -252,6 +252,17 @@ public class ViajesController implements CrudInterfaces {
     public void anularEspacioVendido(int idViaje, int cantidadAnulada){
         Viaje viaje = buscarPorNumeroViaje(idViaje);
         viaje.anularEspacioVendido(cantidadAnulada);
+    }
+    
+    public Viaje buscarPorNumeroDeViaje(int idViaje) {
+        Viaje resultado = null;
+        for (Viaje viaje : viajes) {
+            if (viaje.getIdViaje() == idViaje) {
+                resultado = viaje;
+                break;
+            }
+        }
+        return resultado;
     }
 
     @Override
