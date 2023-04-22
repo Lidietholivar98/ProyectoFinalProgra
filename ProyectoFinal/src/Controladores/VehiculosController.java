@@ -10,8 +10,8 @@ public class VehiculosController implements CrudInterfaces {
 
     private UtilsController metodos = new UtilsController();
     private static ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-    
-    public void CargarDatos() {//(String numeroPlaca, String marca, String estilo, int modelo, int capacidadPasajeros)
+
+    public void cargarDatos() {//(String numeroPlaca, String marca, String estilo, int modelo, int capacidadPasajeros)
         Vehiculo v1 = new Vehiculo("ABC123", "Suzuki", "Vitara", 2020, 4);
         Vehiculo v2 = new Vehiculo("ABC456", "Suzuki", "Grand Vitara", 2020, 20);
         Vehiculo v3 = new Vehiculo("ABC789", "Suzuki", "Ciaz", 2020, 65);
@@ -40,7 +40,7 @@ public class VehiculosController implements CrudInterfaces {
 
     @Override
     public void Consultar() {
-         String placa = JOptionPane.showInputDialog("Ingrese el número de placa: ");
+        String placa = JOptionPane.showInputDialog("Ingrese el número de placa: ");
         Vehiculo vehiculo = buscarPorPlaca(placa);
 
         if (vehiculo != null) {
@@ -103,8 +103,6 @@ public class VehiculosController implements CrudInterfaces {
         }
     }
 
-
-
     public Vehiculo buscarPorPlaca(String placa) {
         Vehiculo resultado = null;
         for (Vehiculo vehiculo : vehiculos) {
@@ -115,8 +113,8 @@ public class VehiculosController implements CrudInterfaces {
         }
         return resultado;
     }
-    
-    public int obtenerCapacidadPasajerosPorPlaca(String placa){
+
+    public int obtenerCapacidadPasajerosPorPlaca(String placa) {
         int capacidad = -1;
         for (Vehiculo vehiculo : vehiculos) {
             if (vehiculo.getNumeroPlaca().equalsIgnoreCase(placa)) {
@@ -127,9 +125,6 @@ public class VehiculosController implements CrudInterfaces {
         return capacidad;
     }
 
-
-
-    
     public Boolean existeVehiculo(String numeroPlaca) {
         boolean existe = false;
         for (Vehiculo vehiculo : vehiculos) {
@@ -141,18 +136,9 @@ public class VehiculosController implements CrudInterfaces {
 
         return existe;
     }
-        @Override
-    public void Anular() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     public void Informe() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-
-
-
-
 }

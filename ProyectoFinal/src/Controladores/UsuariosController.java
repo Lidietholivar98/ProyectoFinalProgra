@@ -75,9 +75,10 @@ public class UsuariosController implements CrudInterfaces {
             usuarios.add(usuario);
         }
     }
+
     @Override
     public void Consultar() {
-       int indexUsuario = -1;
+        int indexUsuario = -1;
         String identificacion;
         try {
             identificacion = JOptionPane.showInputDialog("Ingrese el número de identificación: ");
@@ -100,8 +101,10 @@ public class UsuariosController implements CrudInterfaces {
         } catch (Exception e) {
             metodos.mensajeAlerta("Hubo un error en la búsqueda del usuario");
         }
-    }    public void Ver() {
-        
+    }
+
+    public void Ver() {
+
     }
 
     @Override
@@ -170,7 +173,7 @@ public class UsuariosController implements CrudInterfaces {
                     Registrar();
                     break;
                 case 1:
-                   Consultar();
+                    Consultar();
                     break;
                 case 2:
                     Editar();
@@ -184,7 +187,6 @@ public class UsuariosController implements CrudInterfaces {
             }
         }
     }
-
 
     public int buscarIndicePorId(String identificador) {
         int indexUsuario = -1;
@@ -219,12 +221,6 @@ public class UsuariosController implements CrudInterfaces {
         }
 
         return existe;
-    }
-
-
-    @Override
-    public void Anular() {
-
     }
 
     @Override

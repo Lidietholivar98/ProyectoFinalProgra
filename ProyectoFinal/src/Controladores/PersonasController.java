@@ -24,28 +24,26 @@ public class PersonasController implements CrudInterfaces {
         personas.add(p2);
         personas.add(p3);
     }
-    
+
     @Override
     public void Registrar() {
         String numeroId = "";
         String nombre = "";
-        String numeroTelefono= "";
+        String numeroTelefono = "";
         String email = "";
-        
+
         Boolean identificadorValido = false;
-        while(!identificadorValido){
-            try{
+        while (!identificadorValido) {
+            try {
                 numeroId = JOptionPane.showInputDialog("Ingrese el número de identificación: ");
-                if(numeroId.isEmpty()){
+                if (numeroId.isEmpty()) {
                     metodos.mensajeAlerta("Debe ingresar una identificación válida");
-                }
-                else if(existeIdentificador(numeroId)){
+                } else if (existeIdentificador(numeroId)) {
                     metodos.mensajeAlerta("Esta identificación ya se encuentra registrada");
-                }
-                else{
+                } else {
                     identificadorValido = true;
                 }
-            } catch(Exception e){
+            } catch (Exception e) {
                 metodos.mensajeAlerta("Debe ingresar una identificación válida");
             }
         }
@@ -59,7 +57,7 @@ public class PersonasController implements CrudInterfaces {
                 nombreValido = true;
             }
         }
-        
+
         Boolean numeroTelefonoValido = false;
         while (!numeroTelefonoValido) {
             numeroTelefono = JOptionPane.showInputDialog("Ingrese el número de teléfono: ");
@@ -69,30 +67,30 @@ public class PersonasController implements CrudInterfaces {
                 numeroTelefonoValido = true;
             }
         }
-        
+
         Boolean esCorreoValido = false;
-        while (!esCorreoValido){
+        while (!esCorreoValido) {
             email = JOptionPane.showInputDialog("Ingrese el correo electrónico: ");
             esCorreoValido = metodos.esCorreoValido(email);
-            if(!esCorreoValido){
+            if (!esCorreoValido) {
                 metodos.mensajeAlerta("Debe ingresar un correo válido");
             }
         }
 
         Persona persona = new Persona(numeroId, nombre, numeroTelefono, email);
-        
-        String msg = "Identificación: " + persona.getNumeroIdentificacion() 
-                   + "\nNombre: " + persona.getNombre()
-                   + "\nNúmero teléfono: " + persona.getNumeroTelefono()
-                   + "\nCorreo electrónico: " + persona.getEmail();
+
+        String msg = "Identificación: " + persona.getNumeroIdentificacion()
+                + "\nNombre: " + persona.getNombre()
+                + "\nNúmero teléfono: " + persona.getNumeroTelefono()
+                + "\nCorreo electrónico: " + persona.getEmail();
         String titulo = "Validación de datos";
         int resp = metodos.mensajeConfirmacionSIoNo(msg, titulo);
-        
+
         if (resp == JOptionPane.YES_NO_OPTION) {
             personas.add(persona);
         }
     }
-    
+
     @Override
     public void Consultar() {
         int indexPersona = -1;
@@ -122,8 +120,6 @@ public class PersonasController implements CrudInterfaces {
         }
     }
 
-
-
     @Override
     public void Editar() {
         String identificacion = "";
@@ -143,11 +139,11 @@ public class PersonasController implements CrudInterfaces {
                 numeroTelefono = JOptionPane.showInputDialog("El nuevo número de teléfono es : ", numeroTelefono);
                 email = JOptionPane.showInputDialog("El nuevo correo electrónico es: ", email);
 
-                personas.get(indexPersona).setNumeroIdentificacion(numeroIdentificacion);//TODO: verificar si esto es valido
+                personas.get(indexPersona).setNumeroIdentificacion(numeroIdentificacion);
                 personas.get(indexPersona).setNombre(nombre);
                 personas.get(indexPersona).setNumeroTelefono(numeroTelefono);
                 personas.get(indexPersona).setEmail(email);
-                
+
                 metodos.mensajeInformacion("Modificación realizada con éxito", "Modificación persona");
 
             } else {
@@ -157,8 +153,8 @@ public class PersonasController implements CrudInterfaces {
             metodos.mensajeAlerta("Hubo un error en la modificación de la persona");
         }
     }
-    
-       @Override
+
+    @Override
     public void Eliminar() {
         String identificacion;
         try {
@@ -177,7 +173,7 @@ public class PersonasController implements CrudInterfaces {
             metodos.mensajeAlerta("Hubo un error al eliminar la persona");
         }
     }
-    
+
     public void menuPersonas() {
         String[] opciones = {"Registrar", "Consultar", "Modificar", "Eliminar", "Volver"};
         int opcion = -1;
@@ -203,9 +199,7 @@ public class PersonasController implements CrudInterfaces {
         }
     }
 
-
-    
-    public int buscarIndicePorId(String identificador){
+    public int buscarIndicePorId(String identificador) {
         int indexPersona = -1;
         for (int i = 0; i < personas.size(); i++) {
             if (personas.get(i).getNumeroIdentificacion().equals(identificador)) {
@@ -215,8 +209,8 @@ public class PersonasController implements CrudInterfaces {
         }
         return indexPersona;
     }
-    
-    public Persona buscarPorId(String identificador){
+
+    public Persona buscarPorId(String identificador) {
         Persona persona = null;
         for (Persona p : personas) {
             if (p.getNumeroIdentificacion().equals(identificador)) {
@@ -227,7 +221,7 @@ public class PersonasController implements CrudInterfaces {
 
         return persona;
     }
-    
+
     public Persona buscarPorNombre(String nombre) {
         Persona persona = new Persona();
         for (Persona p : personas) {
@@ -239,7 +233,7 @@ public class PersonasController implements CrudInterfaces {
 
         return persona;
     }
-    
+
     public Boolean existeIdentificador(String identificador) {
         boolean existe = false;
         for (Persona persona : personas) {
@@ -251,15 +245,9 @@ public class PersonasController implements CrudInterfaces {
 
         return existe;
     }
-    
-    @Override
-    public void Anular() {
-
-    }    
 
     @Override
     public void Informe() {
 
     }
-
 }

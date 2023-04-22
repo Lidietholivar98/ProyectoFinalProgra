@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+public class ChoferesController implements CrudInterfaces {
 
-public class ChoferesController implements CrudInterfaces{
-        
     private UtilsController metodos = new UtilsController();
     private static List<Chofer> choferes = new ArrayList();
 
-    public void CargarDatos() {
+    public void cargarDatos() {
         Chofer p1 = new Chofer("111111111", "04/12/2024");
         Chofer p2 = new Chofer("222222222", "08/09/2026");
         Chofer p3 = new Chofer("333333333", "23/03/2027");
@@ -21,7 +20,7 @@ public class ChoferesController implements CrudInterfaces{
         choferes.add(p2);
         choferes.add(p3);
     }
-   
+
     @Override
     public void Registrar() {
         String numeroId = "";
@@ -65,10 +64,10 @@ public class ChoferesController implements CrudInterfaces{
             choferes.add(chofer);
         }
     }
-    
+
     @Override
     public void Consultar() {
-       int indexChofer = -1;
+        int indexChofer = -1;
         String identificacion;
         try {
             identificacion = JOptionPane.showInputDialog("Ingrese el número de identificación: ");
@@ -91,7 +90,6 @@ public class ChoferesController implements CrudInterfaces{
         }
     }
 
-
     @Override
     public void Editar() {
         String identificacion = "";
@@ -107,7 +105,7 @@ public class ChoferesController implements CrudInterfaces{
                 numeroIdentificacion = JOptionPane.showInputDialog("El nuevo número de identificación es: ", numeroIdentificacion);
                 vencimientoLicencia = JOptionPane.showInputDialog("La nueva fecha de expiracion: ", vencimientoLicencia);
 
-                choferes.get(indexChofer).setNumeroIdentificacion(numeroIdentificacion);//TODO: verificar si esto es valido
+                choferes.get(indexChofer).setNumeroIdentificacion(numeroIdentificacion);
                 choferes.get(indexChofer).setVencimientoLicencia(vencimientoLicencia);
 
                 metodos.mensajeInformacion("Modificación realizada con éxito", "Modificación chofer");
@@ -119,7 +117,7 @@ public class ChoferesController implements CrudInterfaces{
             metodos.mensajeAlerta("Hubo un error en la modificación de la chofer");
         }
     }
-    
+
     @Override
     public void Eliminar() {
         String identificacion = "";
@@ -144,7 +142,7 @@ public class ChoferesController implements CrudInterfaces{
             metodos.mensajeAlerta("Hubo un error en la eliminación del chofer");
         }
     }
-    
+
     public void menuChoferes() {
         String[] opciones = {"Registrar", "Consultar", "Modificar", "Eliminar", "Volver"};
         int opcion = -1;
@@ -170,8 +168,7 @@ public class ChoferesController implements CrudInterfaces{
         }
     }
 
-    
-    public int buscarIndicePorId(String identificador){
+    public int buscarIndicePorId(String identificador) {
         int indexChofer = -1;
         for (int i = 0; i < choferes.size(); i++) {
             if (choferes.get(i).getNumeroIdentificacion().equals(identificador)) {
@@ -181,7 +178,7 @@ public class ChoferesController implements CrudInterfaces{
         }
         return indexChofer;
     }
-    
+
     public Chofer buscarPorId(String identificador) {
         Chofer chofer = null;
         for (Chofer p : choferes) {
@@ -207,14 +204,7 @@ public class ChoferesController implements CrudInterfaces{
     }
 
     @Override
-    public void Anular() {
-
-    }    
-
-    @Override
     public void Informe() {
 
     }
-
-
 }

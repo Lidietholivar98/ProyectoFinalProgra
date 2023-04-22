@@ -1,6 +1,7 @@
 package Main;
 
 import Controladores.ChoferesController;
+import Controladores.LoginController;
 import Controladores.MenuController;
 import Controladores.UtilsController;
 import Controladores.VehiculosController;
@@ -14,16 +15,21 @@ public class Inicio {
     private static ViajesController viajes = new ViajesController();
     private static VehiculosController vehiculos = new VehiculosController();
     private static ChoferesController choferes = new ChoferesController();
+    private static LoginController login = new LoginController();
 
     public static void main(String[] args) {
-        choferes.CargarDatos();
-        vehiculos.CargarDatos();
-        viajes.CargarDatos();
-        menuPrincipal();
+        choferes.cargarDatos();
+        vehiculos.cargarDatos();
+        viajes.cargarDatos();
+        if (login.loginLocal()) {
+            menuPrincipal();
+        } else {
+            metodos.mensajeError("Error de autenticación");
+        }
     }
 
     public static void menuPrincipal() {
-        String[] opciones = {"Administracion", "Ventas", "Salir"};
+        String[] opciones = {"Administración", "Ventas", "Salir"};
         int opcion = -1;
         while (opcion != opciones.length - 1) {
             opcion = metodos.menuBotones("Seleccione una opción", "Reservaciones de Viaje", opciones, "Salir");

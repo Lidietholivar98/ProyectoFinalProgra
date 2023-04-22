@@ -100,27 +100,30 @@ public class TiquetesController implements CrudInterfaces {
 
         if (resp == JOptionPane.YES_NO_OPTION) {
             ventas.add(tiquete);
-            viajes.venderEspacioDisponible(idViaje, cantidad);//TODO: buscar todas las ventas para ese viaje y actualizar el espacio disponible
+            viajes.venderEspacioDisponible(idViaje, cantidad);
         }
     }
 
     @Override
     public void Informe() {
-//        String informe = "";
-//        Viaje viaje = new Viaje();
-//        Vehiculo vehiculo = new Vehiculo();
-//        
-//        for (Tiquete tiquete : ventas) {
-//            viaje = viajes.buscarPorNumeroDeViaje(tiquete.getIdViaje());
-//            vehiculo = vehiculos.buscarPorPlaca(viaje.getNumeroPlaca());
-//            informe = informe 
-//                    + "Viaje #: " + tiquete.getIdViaje()
-//                    + "\nCapacidad del autobus: " + vehiculo.getCapacidadPasajeros()
-//                    + "\nTiquetes vendidos: "+tiquete.getCantidad()
-//                    + "\nDisponibilidad de espacios: "+viajes.obtenerEspaciosDisponibles(viaje.getIdViaje()) 
-//                    + "\n**********\n";
-//        }
-//        metodos.mensajeInformacion(informe, "Informe de ventas");
+        String informe = "";
+        Viaje viaje = new Viaje();
+        Vehiculo vehiculo = new Vehiculo();
+
+        for (Tiquete tiquete : ventas) {
+            if(!tiquete.estaAnulado()){
+                viaje = viajes.buscarPorNumeroDeViaje(tiquete.getIdViaje());
+                vehiculo = vehiculos.buscarPorPlaca(viaje.getNumeroPlaca());
+                informe = informe 
+                    + "Venta #: " + tiquete.getIdVenta()
+                    + "\nViaje #: " + tiquete.getIdViaje()
+                    + "\nCapacidad del autobus: " + vehiculo.getCapacidadPasajeros()
+                    + "\nTiquetes vendidos: " + tiquete.getCantidad()
+                    + "\nDisponibilidad de espacios: " + viajes.obtenerEspaciosDisponibles(viaje.getIdViaje())
+                    + "\n**********\n";
+            }
+        }
+        metodos.mensajeInformacion(informe, "Informe de ventas");
     }
 
     @Override
@@ -145,13 +148,15 @@ public class TiquetesController implements CrudInterfaces {
         }
         tiquete = buscarPorIdVenta(idVenta);
         if (tiquete != null) {
-            metodos.mensajeInformacion(tiquete.toString(), "Información de la venta");
+            if(!tiquete.estaAnulado())
+                metodos.mensajeInformacion(tiquete.toString(), "Información de la venta");
+            else
+                metodos.mensajeInformacion("** Venta anulada\n" + tiquete.toString(), "Información de la venta");
         } else {
             metodos.mensajeAlerta(String.format("El número de venta %s no se encuentra registrado", idVenta));
         }
     }
 
-    @Override
     public void Anular() {
         String idVentaStr = "";
         int idVenta = -1;
@@ -171,23 +176,21 @@ public class TiquetesController implements CrudInterfaces {
                 }
             }
         }
-        
+
         tiquete = buscarPorIdVenta(idVenta);
         if (tiquete != null) {
             int opcion = metodos.mensajeConfirmacionSIoNo(tiquete.toString(), "¿Desea anular la venta?");
             if (opcion == JOptionPane.YES_NO_OPTION) {
                 viajes.anularEspacioVendido(idVenta, tiquete.getCantidad());
+                tiquete.anular();
                 metodos.mensajeInformacion("Venta anulada correctamente");
             }
         } else {
             metodos.mensajeAlerta(String.format("El número de venta %s no se encuentra registrado", idVenta));
         }
     }
-    
 
-
-    
-    public Tiquete buscarPorIdVenta(int idVenta){
+    public Tiquete buscarPorIdVenta(int idVenta) {
         Tiquete tiquete = null;
         for (Tiquete v : ventas) {
             if (v.getIdVenta() == idVenta) {
@@ -195,13 +198,10 @@ public class TiquetesController implements CrudInterfaces {
                 break;
             }
         }
-
         return tiquete;
     }
-    
-    
-    
-        @Override
+
+    @Override
     public void Editar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

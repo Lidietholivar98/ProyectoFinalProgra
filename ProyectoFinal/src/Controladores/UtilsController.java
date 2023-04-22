@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class UtilsController {
-    
+
     public void mensajeInformacion(String msg) {
         JOptionPane.showMessageDialog(null, msg, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -35,7 +35,7 @@ public class UtilsController {
         Matcher coincidencia = patron.matcher(correoAValidar);
         return coincidencia.matches();
     }
-    
+
     public Boolean esEntero(String texto) {
         int valor;
         try {
@@ -45,7 +45,7 @@ public class UtilsController {
             return false;
         }
     }
-    
+
     public boolean esDouble(String texto) {
         double valor;
         try {
@@ -54,5 +54,14 @@ public class UtilsController {
         } catch (NumberFormatException ex) {
             return false;
         }
+    }
+    
+    public String entradaTexto(String mensaje, String titulo) {
+        String input = JOptionPane.showInputDialog(null, mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
+        return input;
+    }
+
+    public void mensajeError(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

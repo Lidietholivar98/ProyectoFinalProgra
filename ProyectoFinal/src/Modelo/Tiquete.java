@@ -10,12 +10,13 @@ public class Tiquete {
     private static final double IVA = 0.13; // Porcentaje del IVA
     private int idViaje;
     private int cantidad;
-    private double precioVenta;//TODO se valida contra el viaje
+    private double precioVenta;
     private LocalDate fechaVenta;
     private double totalVentaBruta;
     private double totalIVA;
     private double totalVenta;
     private static int nuevoNumeroVenta;
+    private boolean anulado;
 
     public Tiquete() {
     }
@@ -30,12 +31,13 @@ public class Tiquete {
         this.totalVentaBruta = cantidad * precioVenta;
         this.totalIVA = totalVentaBruta * IVA;
         this.totalVenta = totalVentaBruta + totalIVA;
+        this.anulado = false;
     }
-    
+
     public static void setNuevoNumeroVenta() {
         nuevoNumeroVenta++;
     }
-    
+
     public int getIdVenta() {
         return idVenta;
     }
@@ -76,6 +78,14 @@ public class Tiquete {
         this.fechaVenta = fechaVenta;
     }
     
+    public void anular(){
+        this.anulado = true;
+    }
+    
+    public boolean estaAnulado(){
+        return this.anulado;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
