@@ -170,7 +170,7 @@ public class ChoferesController implements CrudInterfaces{
     }
     
     public Chofer buscarPorId(String identificador) {
-        Chofer chofer = new Chofer();
+        Chofer chofer = null;
         for (Chofer p : choferes) {
             if (p.getNumeroIdentificacion().equals(identificador)) {
                 chofer = p;

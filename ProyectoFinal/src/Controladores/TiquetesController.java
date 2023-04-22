@@ -88,7 +88,7 @@ public class TiquetesController implements CrudInterfaces {
         Tiquete tiquete = new Tiquete(idViaje, cantidad, precioVenta, fechaVenta);
 
         String mensaje = "Número de viaje: " + tiquete.getIdViaje()
-                + "\nCantidad: " + tiquete.getCantidad()
+                + "\nCantidad de tiquetes: " + tiquete.getCantidad()
                 + "\nPrecio de venta: " + tiquete.getPrecioVenta()
                 + "\nFecha de venta: " + tiquete.getFechaVenta().getDayOfMonth()
                 + '/'
@@ -100,7 +100,7 @@ public class TiquetesController implements CrudInterfaces {
 
         if (resp == JOptionPane.YES_NO_OPTION) {
             ventas.add(tiquete);
-            viajes.venderEspacioDisponible(idViaje, cantidad);
+            viajes.venderEspacioDisponible(idViaje, cantidad);//TODO: buscar todas las ventas para ese viaje y actualizar el espacio disponible
         }
     }
 
@@ -117,9 +117,10 @@ public class TiquetesController implements CrudInterfaces {
                     + "Viaje #: " + tiquete.getIdViaje()
                     + "\nCapacidad del autobus: " + vehiculo.getCapacidadPasajeros()
                     + "\nTiquetes vendidos: "+tiquete.getCantidad()
-                    + "\nDisponibilidad de espacios: "+viajes.obtenerEspaciosDisponibles(viaje.getIdViaje()) + "\n";
+                    + "\nDisponibilidad de espacios: "+viajes.obtenerEspaciosDisponibles(viaje.getIdViaje()) 
+                    + "\n**********\n";
         }
-        metodos.mensajeInformacion(informe);
+        metodos.mensajeInformacion(informe, "Informe de ventas");
     }
 
     @Override
@@ -199,7 +200,7 @@ public class TiquetesController implements CrudInterfaces {
     }
     
     public Tiquete buscarPorIdVenta(int idVenta){
-        Tiquete tiquete = new Tiquete();
+        Tiquete tiquete = null;
         for (Tiquete v : ventas) {
             if (v.getIdVenta() == idVenta) {
                 tiquete = v;

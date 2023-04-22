@@ -106,12 +106,14 @@ public class VehiculosController implements CrudInterfaces {
     }
 
     public Vehiculo buscarPorPlaca(String placa) {
+        Vehiculo resultado = null;
         for (Vehiculo vehiculo : vehiculos) {
             if (vehiculo.getNumeroPlaca().equalsIgnoreCase(placa)) {
-                return vehiculo;
+                resultado = vehiculo;
+                break;
             }
         }
-        return null;
+        return resultado;
     }
     
     public int obtenerCapacidadPasajerosPorPlaca(String placa){

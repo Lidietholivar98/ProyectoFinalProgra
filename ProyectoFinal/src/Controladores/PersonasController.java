@@ -198,7 +198,7 @@ public class PersonasController implements CrudInterfaces {
     }
     
     public Persona buscarPorId(String identificador){
-        Persona persona = new Persona();
+        Persona persona = null;
         for (Persona p : personas) {
             if (p.getNumeroIdentificacion().equals(identificador)) {
                 persona = p;

@@ -1,6 +1,7 @@
 package Controladores;
 
 import static Controladores.MenuController.menuAdministracion;
+import static Controladores.MenuController.menuVentas;
 import Interfaces.CrudInterfaces;
 import Modelo.Viaje;
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
 public class ViajesController implements CrudInterfaces {
 
     private UtilsController metodos = new UtilsController();
-    private List<Viaje> viajes = new ArrayList();
+    private static List<Viaje> viajes = new ArrayList();
     private VehiculosController controladorVehiculos = new VehiculosController();
 
     public void CargarDatos() {
@@ -186,7 +187,7 @@ public class ViajesController implements CrudInterfaces {
                     Eliminar();
                     break;
                 case 4:
-                    menuAdministracion();
+                    menuVentas();
                     break;
             }
         }

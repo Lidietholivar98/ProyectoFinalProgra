@@ -183,7 +183,7 @@ public class UsuariosController implements CrudInterfaces {
     }
 
     public Usuario buscarPorId(String identificador) {
-        Usuario usuario = new Usuario();
+        Usuario usuario = null;
         for (Usuario u : usuarios) {
             if (u.getNumeroIdentificacion().equals(identificador)) {
                 usuario = u;
