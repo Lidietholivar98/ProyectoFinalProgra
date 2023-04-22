@@ -67,27 +67,7 @@ public class ChoferesController implements CrudInterfaces{
     }
     
     public void Ver() {
-        int indexChofer = -1;
-        String identificacion;
-        try {
-            identificacion = JOptionPane.showInputDialog("Ingrese el número de identificación: ");
-            indexChofer = buscarIndicePorId(identificacion);
-
-            if (indexChofer != -1) {
-                String info = "";
-                String numeroId = choferes.get(indexChofer).getNumeroIdentificacion();
-                String vencimientoLicencia = choferes.get(indexChofer).getVencimientoLicencia();
-
-                info = info + ("El número de identificación de la chofer es: " + numeroId
-                        + "\nLa licencia expira el: " + vencimientoLicencia + "\n\n");
-
-                metodos.mensajeInformacion(info, "Información de la chofer");
-            } else {
-                metodos.mensajeAlerta(String.format("El número de identificación %s no se encuentra registrado", identificacion));
-            }
-        } catch (Exception e) {
-            metodos.mensajeAlerta("Hubo un error en la búsqueda de la chofer");
-        }
+        
     }
 
     @Override
@@ -153,7 +133,7 @@ public class ChoferesController implements CrudInterfaces{
                     Registrar();
                     break;
                 case 1:
-                    Ver();
+                    Consultar();
                     break;
                 case 2:
                     Editar();
@@ -215,7 +195,27 @@ public class ChoferesController implements CrudInterfaces{
 
     @Override
     public void Consultar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       int indexChofer = -1;
+        String identificacion;
+        try {
+            identificacion = JOptionPane.showInputDialog("Ingrese el número de identificación: ");
+            indexChofer = buscarIndicePorId(identificacion);
+
+            if (indexChofer != -1) {
+                String info = "";
+                String numeroId = choferes.get(indexChofer).getNumeroIdentificacion();
+                String vencimientoLicencia = choferes.get(indexChofer).getVencimientoLicencia();
+
+                info = info + ("El número de identificación de la chofer es: " + numeroId
+                        + "\nLa licencia expira el: " + vencimientoLicencia + "\n\n");
+
+                metodos.mensajeInformacion(info, "Información de la chofer");
+            } else {
+                metodos.mensajeAlerta(String.format("El número de identificación %s no se encuentra registrado", identificacion));
+            }
+        } catch (Exception e) {
+            metodos.mensajeAlerta("Hubo un error en la búsqueda de la chofer");
+        }
     }
 
     @Override
