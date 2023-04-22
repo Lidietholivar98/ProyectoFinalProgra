@@ -38,8 +38,16 @@ public class VehiculosController implements CrudInterfaces {
         vehiculos.add(vehiculo);
     }
 
-    public void Ver() {
-       
+    @Override
+    public void Consultar() {
+         String placa = JOptionPane.showInputDialog("Ingrese el número de placa: ");
+        Vehiculo vehiculo = buscarPorPlaca(placa);
+
+        if (vehiculo != null) {
+            JOptionPane.showMessageDialog(null, vehiculo.toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "Vehículo no encontrado");
+        }
     }
 
     @Override
@@ -95,15 +103,7 @@ public class VehiculosController implements CrudInterfaces {
         }
     }
 
-    @Override
-    public void Anular() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
-    @Override
-    public void Informe() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     public Vehiculo buscarPorPlaca(String placa) {
         Vehiculo resultado = null;
@@ -127,20 +127,32 @@ public class VehiculosController implements CrudInterfaces {
         return capacidad;
     }
 
-    @Override
-    public void Consultar() {
-         String placa = JOptionPane.showInputDialog("Ingrese el número de placa: ");
-        Vehiculo vehiculo = buscarPorPlaca(placa);
 
-        if (vehiculo != null) {
-            JOptionPane.showMessageDialog(null, vehiculo.toString());
-        } else {
-            JOptionPane.showMessageDialog(null, "Vehículo no encontrado");
+
+    
+    public Boolean existeVehiculo(String numeroPlaca) {
+        boolean existe = false;
+        for (Vehiculo vehiculo : vehiculos) {
+            if (vehiculo.getNumeroPlaca().equals(numeroPlaca)) {
+                existe = true;
+                break;
+            }
         }
-    }
 
-    @Override
-    public void Buscar() {
+        return existe;
+    }
+        @Override
+    public void Anular() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void Informe() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
+
+
+
 }

@@ -14,7 +14,9 @@ public class ViajesController implements CrudInterfaces {
     private UtilsController metodos = new UtilsController();
     private static List<Viaje> viajes = new ArrayList();
     private VehiculosController controladorVehiculos = new VehiculosController();
-
+    VehiculosController vehiculos = new VehiculosController();
+    ChoferesController choferes = new ChoferesController();
+    
     public void CargarDatos() {
         //Viaje(String numeroPlaca, String idChofer, LocalDate fechaViaje, String destino, int capacidadPasajeros, double precioTiquete)
         Viaje v1 = new Viaje("ABC123", "111111111", LocalDate.now(), "Limon", 4, 2000.0);
@@ -25,7 +27,7 @@ public class ViajesController implements CrudInterfaces {
         viajes.add(v3);
     }
 
-    @Override
+@Override
     public void Registrar() {
         String numeroPlaca = "";
         String idChofer = "";
@@ -41,15 +43,18 @@ public class ViajesController implements CrudInterfaces {
                 metodos.mensajeAlerta("Debe ingresar un número de placa válido");
             } else if (existePlaca(numeroPlaca)) {
                 metodos.mensajeAlerta("Esta placa ya posee un viaje programado");
+            } else if (!existeVehiculo(numeroPlaca)) {
+                metodos.mensajeAlerta("Este número de placa no existe en el transporte registrado");
             } else {
                 placaValida = true;
             }
         }
-
         Boolean choferValido = false;
         while (!choferValido) {
             idChofer = JOptionPane.showInputDialog("Ingrese el identificador de chofer: ");
-            if (idChofer.isEmpty()) {
+             if (!existePersonaEnCatalogo(idChofer)) {
+                metodos.mensajeAlerta("Este Chofer no esta ingresado en el sistema");
+             }else if (idChofer.isEmpty()) {
                 metodos.mensajeAlerta("Debe ingresar un identificador de chofer válido");
             } else {
                 choferValido = true;
@@ -90,17 +95,40 @@ public class ViajesController implements CrudInterfaces {
 
         metodos.mensajeInformacion("Viaje creado exitosamente", "Creación de viaje");
     }
+   @Override
+    public void Consultar() {
+                String idViajeStr = "";
+        int idViaje = -1;
+        
+        Boolean idViajeValido = false;
+        while (!idViajeValido) {
+            idViajeStr = JOptionPane.showInputDialog("Ingrese el número de viaje:");
+            if (!esEntero(idViajeStr)) {
+                metodos.mensajeAlerta("Debe ingresar un número entero");
+            } else {
+                idViaje = Integer.parseInt(idViajeStr);
+                if (idViaje <= 0) {
+                    metodos.mensajeAlerta("Debe ingresar un viaje valido");
+                } else {
+                    idViajeValido = true;
+                }
+            }
+        }
 
-    public void Ver() {//TODO: Trabajar este metodo, ya que no se el proposito del mismo
-//        String mensaje = "Lista de Viajes: \n\n";
-//        for (Viaje v : viajes) {
-//            mensaje += "ID: " + v.getId() + "\nOrigen: " + v.getOrigen() + "\nDestino: " + v.getDestino() + "\nMedio de transporte: " + v.getMedioTransporte() + "\n\n";
-//        }
-//        metodos.mensajeInformacion(mensaje, "Lista de viajes");
+        try {
+            for (Viaje viaje : viajes ){
+                if (viaje.getIdViaje()== idViaje) {
+                    metodos.mensajeInformacion(viaje.toString());
+                }
+                }
+            
+        } catch (Exception e) {
+            metodos.mensajeInformacion(String.format("El número de venta %s no se encuentra registrado", idViaje));
+        }
     }
 
     @Override
-    public void Editar() {//TODO: arreglar este metodo para que se hagan los respectivos SET
+    public void Editar() {
         Boolean idViajeValido = false;
         String idViajeStr = "";
         int idViaje = -1;
@@ -169,7 +197,7 @@ public class ViajesController implements CrudInterfaces {
     }
 
     public void menuViajes() {
-        String[] opciones = {"Crear", "Ver", "Modificar", "Eliminar", "Volver"};
+        String[] opciones = {"Crear", "Consultar", "Modificar", "Eliminar", "Volver"};
         int opcion = -1;
         while (opcion != opciones.length - 1) {
             opcion = metodos.menuBotones("Seleccione una opción", "Viajes", opciones, "Volver");
@@ -178,7 +206,7 @@ public class ViajesController implements CrudInterfaces {
                     Registrar();
                     break;
                 case 1:
-                    Ver();
+                    Consultar();
                     break;
                 case 2:
                     Editar();
@@ -187,23 +215,30 @@ public class ViajesController implements CrudInterfaces {
                     Eliminar();
                     break;
                 case 4:
-                    menuVentas();
+                    menuAdministracion();
                     break;
             }
         }
     }
 
-    @Override
-    public void Anular() {
+    
+    public Boolean existeVehiculo(String numeroPlaca) {
+        boolean existe = false;
+        if (vehiculos.existeVehiculo(numeroPlaca)) {
+            existe = true;
+        }
 
+        return existe;
     }
+    public Boolean existePersonaEnCatalogo(String identificacion) {
+        boolean existe = false;
+        if (choferes.existeIdentificador(identificacion)) {
+            existe = true;
+        }
 
-    @Override
-    public void Informe() {
-
+        return existe;
     }
-
-// Métodos auxiliares
+ // Métodos auxiliares
     private int buscarIndicePorId(int id) {
         int indice = -1;
         for (int i = 0; i < viajes.size(); i++) {
@@ -234,7 +269,15 @@ public class ViajesController implements CrudInterfaces {
         }
         return resultado;
     }
-    
+    public boolean esEntero(String texto) {
+        int valor;
+        try {
+            valor = Integer.parseInt(texto);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
     public int obtenerEspaciosDisponibles(int idViaje){
         Viaje viaje = buscarPorNumeroViaje(idViaje);
         return viaje.cantidadDeEspacioDisponible();
@@ -254,25 +297,15 @@ public class ViajesController implements CrudInterfaces {
         Viaje viaje = buscarPorNumeroViaje(idViaje);
         viaje.anularEspacioVendido(cantidadAnulada);
     }
-    
-    public Viaje buscarPorNumeroDeViaje(int idViaje) {
-        Viaje resultado = null;
-        for (Viaje viaje : viajes) {
-            if (viaje.getIdViaje() == idViaje) {
-                resultado = viaje;
-                break;
-            }
-        }
-        return resultado;
+
+    @Override
+    public void Anular() {
+
     }
 
     @Override
-    public void Consultar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void Informe() {
+
     }
 
-    @Override
-    public void Buscar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

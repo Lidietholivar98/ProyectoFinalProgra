@@ -75,8 +75,32 @@ public class UsuariosController implements CrudInterfaces {
             usuarios.add(usuario);
         }
     }
+    @Override
+    public void Consultar() {
+       int indexUsuario = -1;
+        String identificacion;
+        try {
+            identificacion = JOptionPane.showInputDialog("Ingrese el número de identificación: ");
+            indexUsuario = buscarIndicePorId(identificacion);
 
-    public void Ver() {
+            if (indexUsuario != -1) {
+                String info = "";
+                String numeroId = usuarios.get(indexUsuario).getNumeroIdentificacion();
+                String codigoUsuario = usuarios.get(indexUsuario).getCodigoUsuario();
+                String claveAcceso = usuarios.get(indexUsuario).getClaveAcceso();
+
+                info = info + ("El número de identificación del usuario es: " + numeroId
+                        + "\nEl código de usuario es: " + codigoUsuario
+                        + "\nLa clave de acceso es: " + claveAcceso + "\n\n");
+
+                metodos.mensajeInformacion(info, "Información del usuario");
+            } else {
+                metodos.mensajeAlerta(String.format("El usuario con número de identificación %s no se encuentra registrado", identificacion));
+            }
+        } catch (Exception e) {
+            metodos.mensajeAlerta("Hubo un error en la búsqueda del usuario");
+        }
+    }    public void Ver() {
         
     }
 
@@ -161,15 +185,6 @@ public class UsuariosController implements CrudInterfaces {
         }
     }
 
-    @Override
-    public void Anular() {
-
-    }
-
-    @Override
-    public void Informe() {
-
-    }
 
     public int buscarIndicePorId(String identificador) {
         int indexUsuario = -1;
@@ -206,35 +221,14 @@ public class UsuariosController implements CrudInterfaces {
         return existe;
     }
 
+
     @Override
-    public void Consultar() {
-       int indexUsuario = -1;
-        String identificacion;
-        try {
-            identificacion = JOptionPane.showInputDialog("Ingrese el número de identificación: ");
-            indexUsuario = buscarIndicePorId(identificacion);
+    public void Anular() {
 
-            if (indexUsuario != -1) {
-                String info = "";
-                String numeroId = usuarios.get(indexUsuario).getNumeroIdentificacion();
-                String codigoUsuario = usuarios.get(indexUsuario).getCodigoUsuario();
-                String claveAcceso = usuarios.get(indexUsuario).getClaveAcceso();
-
-                info = info + ("El número de identificación del usuario es: " + numeroId
-                        + "\nEl código de usuario es: " + codigoUsuario
-                        + "\nLa clave de acceso es: " + claveAcceso + "\n\n");
-
-                metodos.mensajeInformacion(info, "Información del usuario");
-            } else {
-                metodos.mensajeAlerta(String.format("El usuario con número de identificación %s no se encuentra registrado", identificacion));
-            }
-        } catch (Exception e) {
-            metodos.mensajeAlerta("Hubo un error en la búsqueda del usuario");
-        }
     }
 
     @Override
-    public void Buscar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void Informe() {
+
     }
 }

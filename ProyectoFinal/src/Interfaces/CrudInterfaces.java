@@ -15,5 +15,5 @@ public interface CrudInterfaces {
     
     public void Anular();
     
-    public void Buscar();
+    
 }

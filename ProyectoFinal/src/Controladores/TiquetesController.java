@@ -106,21 +106,21 @@ public class TiquetesController implements CrudInterfaces {
 
     @Override
     public void Informe() {
-        String informe = "";
-        Viaje viaje = new Viaje();
-        Vehiculo vehiculo = new Vehiculo();
-        
-        for (Tiquete tiquete : ventas) {
-            viaje = viajes.buscarPorNumeroDeViaje(tiquete.getIdViaje());
-            vehiculo = vehiculos.buscarPorPlaca(viaje.getNumeroPlaca());
-            informe = informe 
-                    + "Viaje #: " + tiquete.getIdViaje()
-                    + "\nCapacidad del autobus: " + vehiculo.getCapacidadPasajeros()
-                    + "\nTiquetes vendidos: "+tiquete.getCantidad()
-                    + "\nDisponibilidad de espacios: "+viajes.obtenerEspaciosDisponibles(viaje.getIdViaje()) 
-                    + "\n**********\n";
-        }
-        metodos.mensajeInformacion(informe, "Informe de ventas");
+//        String informe = "";
+//        Viaje viaje = new Viaje();
+//        Vehiculo vehiculo = new Vehiculo();
+//        
+//        for (Tiquete tiquete : ventas) {
+//            viaje = viajes.buscarPorNumeroDeViaje(tiquete.getIdViaje());
+//            vehiculo = vehiculos.buscarPorPlaca(viaje.getNumeroPlaca());
+//            informe = informe 
+//                    + "Viaje #: " + tiquete.getIdViaje()
+//                    + "\nCapacidad del autobus: " + vehiculo.getCapacidadPasajeros()
+//                    + "\nTiquetes vendidos: "+tiquete.getCantidad()
+//                    + "\nDisponibilidad de espacios: "+viajes.obtenerEspaciosDisponibles(viaje.getIdViaje()) 
+//                    + "\n**********\n";
+//        }
+//        metodos.mensajeInformacion(informe, "Informe de ventas");
     }
 
     @Override
@@ -184,20 +184,8 @@ public class TiquetesController implements CrudInterfaces {
         }
     }
     
-    @Override
-    public void Editar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public void Eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public void Buscar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
     public Tiquete buscarPorIdVenta(int idVenta){
         Tiquete tiquete = null;
@@ -210,4 +198,17 @@ public class TiquetesController implements CrudInterfaces {
 
         return tiquete;
     }
+    
+    
+    
+        @Override
+    public void Editar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void Eliminar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

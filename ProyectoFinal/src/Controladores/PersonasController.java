@@ -93,9 +93,36 @@ public class PersonasController implements CrudInterfaces {
         }
     }
     
-    public void Ver() {
-        
+    @Override
+    public void Consultar() {
+        int indexPersona = -1;
+        String identificacion;
+        try {
+            identificacion = JOptionPane.showInputDialog("Ingrese el número de identificación: ");
+            indexPersona = buscarIndicePorId(identificacion);
+
+            if (indexPersona != -1) {
+                String info = "";
+                String numeroId = personas.get(indexPersona).getNumeroIdentificacion();
+                String nombre = personas.get(indexPersona).getNombre();
+                String numeroTelefono = personas.get(indexPersona).getNumeroTelefono();
+                String email = personas.get(indexPersona).getEmail();
+
+                info = info + ("El número de identificación de la persona es: " + numeroId
+                        + "\nEl nombre es: " + nombre
+                        + "\nEl número de teléfono es: " + numeroTelefono
+                        + "\nEl correo electrónico es: " + email + "\n\n");
+
+                metodos.mensajeInformacion(info, "Información de la persona");
+            } else {
+                metodos.mensajeAlerta(String.format("El número de identificación %s no se encuentra registrado", identificacion));
+            }
+        } catch (Exception e) {
+            metodos.mensajeAlerta("Hubo un error en la búsqueda de la persona");
+        }
     }
+
+
 
     @Override
     public void Editar() {
@@ -176,15 +203,7 @@ public class PersonasController implements CrudInterfaces {
         }
     }
 
-    @Override
-    public void Anular() {
 
-    }    
-
-    @Override
-    public void Informe() {
-
-    }
     
     public int buscarIndicePorId(String identificador){
         int indexPersona = -1;
@@ -232,38 +251,15 @@ public class PersonasController implements CrudInterfaces {
 
         return existe;
     }
+    
+    @Override
+    public void Anular() {
+
+    }    
 
     @Override
-    public void Consultar() {
-        int indexPersona = -1;
-        String identificacion;
-        try {
-            identificacion = JOptionPane.showInputDialog("Ingrese el número de identificación: ");
-            indexPersona = buscarIndicePorId(identificacion);
+    public void Informe() {
 
-            if (indexPersona != -1) {
-                String info = "";
-                String numeroId = personas.get(indexPersona).getNumeroIdentificacion();
-                String nombre = personas.get(indexPersona).getNombre();
-                String numeroTelefono = personas.get(indexPersona).getNumeroTelefono();
-                String email = personas.get(indexPersona).getEmail();
-
-                info = info + ("El número de identificación de la persona es: " + numeroId
-                        + "\nEl nombre es: " + nombre
-                        + "\nEl número de teléfono es: " + numeroTelefono
-                        + "\nEl correo electrónico es: " + email + "\n\n");
-
-                metodos.mensajeInformacion(info, "Información de la persona");
-            } else {
-                metodos.mensajeAlerta(String.format("El número de identificación %s no se encuentra registrado", identificacion));
-            }
-        } catch (Exception e) {
-            metodos.mensajeAlerta("Hubo un error en la búsqueda de la persona");
-        }
     }
 
-    @Override
-    public void Buscar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
