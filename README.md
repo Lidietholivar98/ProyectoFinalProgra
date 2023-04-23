@@ -1,7 +1,7 @@
 # Autos Colón
 
 ## Descripción
-Sistema para Auto transportes el Roble permite controlar un programa para la venta de ticketes de viaje y a su vez gestionar la venta de los mismos.
+Sistema para Auto Transportes El Roble permite controlar un programa para la venta de Tiquetes de viaje y a su vez gestionar la venta de los mismos.
 
 El sistema cuenta con 2 módulos principales:
 	1. Módulo de Registro de Administración
