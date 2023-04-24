@@ -181,7 +181,7 @@ public class TiquetesController implements CrudInterfaces {
         if (tiquete != null) {
             int opcion = metodos.mensajeConfirmacionSIoNo(tiquete.toString(), "¿Desea anular la venta?");
             if (opcion == JOptionPane.YES_NO_OPTION) {
-                viajes.anularEspacioVendido(idVenta, tiquete.getCantidad());
+                viajes.anularEspacioVendido(tiquete.getIdViaje(), tiquete.getCantidad());
                 tiquete.anular();
                 metodos.mensajeInformacion("Venta anulada correctamente");
             }
